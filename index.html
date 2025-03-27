@@ -9,6 +9,7 @@
           integrity="sha384-50oBUHEmvpQ+1LWy57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
           crossorigin="anonymous">
           <link href="https://fonts.googleapis.com/css?family=Lobster|Montserrat" rel="stylesheet">
+          <script src="/main.js"></script>
 </head>
 <body>
 
@@ -23,12 +24,37 @@
                 <li><a class="homeblack" href="elogin.html">LOG IN</a></li>
             </ul>
         </nav>
+        <!-- Login Container -->
+    <div class="container hidden" id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p id="error-msg" style="color: red;"></p>
+    </div>
+    
     </header>
-
+    
     <div class="divider"></div>
 
     <!-- About Us Section -->
     <section id="about">
+        <h2 style="text-align: center; font-family: Montserrat; font-size: 40px;">Managers</h2>
+        
+        <div class="team-container">
+            <div class="team-member">
+                <img src="images/no.jpg" alt="Jane Asesa" style="width:250px">
+                <h2>Jane Asesa</h2>
+            </div>
+            <div class="team-member">
+                <img src="images/no.jpg" alt="Avatar" style="width:250px">
+                <h2>Wycky Otieno</h2>
+            </div>
+            <div class="team-member">
+                <img src="images/no.jpg" alt="Avatar" style="width:250px">
+                <h2>Jerry Joseph</h2>
+            </div>
+        </div>
         <h2 style="text-align: center; font-family: Montserrat; font-size: 40px;">Marketing Team</h2>
         
         <div class="team-container">
@@ -37,7 +63,7 @@
                 <h2>Jane Asesa</h2>
             </div>
             <div class="team-member">
-                <img src="images/test.jpg" alt="Avatar" style="width:250px">
+                <img src="images/no.jpg" alt="Avatar" style="width:250px">
                 <h2>Wycky Otieno</h2>
             </div>
             <div class="team-member">
@@ -46,10 +72,41 @@
             </div>
         </div>
     </section>
+    <div class="loginbox">
+        <img src="assets/admin.PNG" class="avatar">
+            <h1>Login Here</h1>
+            <form action="process/aprocess.php" method="POST">
+                <p>Email</p>
+                <input type="text" name="mailuid" placeholder="Enter Email Address" required="required">
+                <p>Password</p>
+                <input type="password" name="pwd" placeholder="Enter Password" required="required">
+                <input type="submit" name="login-submit" value="Login">
+               
+            </form>
+            
+        </div>
+        
+  
+        <h2>Employee List</h2>
+        <button onclick="fetchEmployees()">Load Employees</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTable"></tbody>
+       
+
+
+
+</table>
 
     <div class="divider"></div>
+    
 
-    <!-- Contact Section -->
     <section id="contact">
         <h2 style="text-align: center; font-family: Montserrat; font-size: 30px;">Contact Us</h2>
         <p style="text-align: center; font-size: 25px;">

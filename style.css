@@ -81,8 +81,8 @@ nav ul ul{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px; /* Adds space between images */
-    flex-wrap: wrap; /* Wraps items on smaller screens */
+    gap: 30px;
+    flex-wrap: wrap; 
     margin: 20px;
 }
 
@@ -111,7 +111,11 @@ margin: 0px;
   width: 100%;
   font-family: 'Montserrat', sans-serif;
 }
-
+body { font-family: Arial, sans-serif; text-align: center; }
+        table { width: 60%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        button { padding: 10px 20px; margin-bottom: 10px; cursor: pointer; }
 th, td {
   text-align: center;
   padding: 8px;
