@@ -1,83 +1,31 @@
-function fetchEmployees() {
-    const jobTitles = ["Software Engineer", "Project Manager", "HR Specialist", "Data Analyst", "UX Designer"];
-    
-    fetch('https://randomuser.me/api/?results=5') 
-        .then(response => response.json())
-        .then(data => {
-            const employees = data.results;
-            const tableBody = document.getElementById('employeeTable');
-            tableBody.innerHTML = ''; 
 
-            employees.forEach(user => {
-                const randomJob = jobTitles[Math.floor(Math.random() * jobTitles.length)];
-                const employee = {
-                    name: `${user.name.first} ${user.name.last}`,
-                    email: user.email,
-                    position: randomJob
-                };
+document.getElementById("loginBtn").addEventListener("click", function() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorMsg = document.getElementById("error-msg");
+  const successMsg = document.getElementById("success-msg");
 
-                
-                const row = `
-                    <tr>
-                        <td>${employee.name}</td>
-                        <td>${employee.email}</td>
-                        <td>${employee.position}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
+  // Admins from JSON
+  fetch("employees.json")
+      .then(response => response.json())
+      .then(data => {
+          const admins = data.admins;
+          const foundAdmin = admins.find(admin => admin.email === username && admin.password === password);
 
-                // Save employee to db.json
-                saveEmployee(employee);
-            });
-        })
-        .catch(error => console.error('Error fetching employees:', error));
-}
+          if (foundAdmin) {
+              successMsg.textContent = "Login Successful! Welcome, " + foundAdmin.name;
+              errorMsg.textContent = "";
+              
+              // Employee Data Section
+              document.getElementById("employee-section").style.display = "block";
 
-function saveEmployee(employee) {
-    fetch('http://localhost:3000/employees', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(employee)
-    })
-    .then(response => response.json())
-    .then(data => console.log('Saved to db.json:', data))
-    .catch(error => console.error('Error saving employee:', error));
-}
-fetch('db.json')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
-  function toggleLogin() {
-    document.getElementById("login-container").classList.toggle("hidden");
-}
+              // Load Employees
+              loadEmployees(data.employees);
+          } else {
+              errorMsg.textContent = "Invalid username or password.";
+              successMsg.textContent = "";
+          }
+      })
+      .catch(error => console.error("Error fetching admin data:", error));
+});
 
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    fetch("db.json")
-        .then(response => response.json())
-        .then(data => {
-            const users = data.users || [];
-            const user = users.find(u => u.username === username && u.password === password);
-
-            if (user) {
-                document.getElementById("login-container").classList.add("hidden");
-                document.getElementById("dashboard").classList.remove("hidden");
-                document.getElementById("user-name").innerText = user.username;
-            } else {
-                document.getElementById("error-msg").innerText = "Invalid username or password!";
-            }
-        })
-        .catch(error => console.error("Error:", error));
-}
-
-function logout() {
-    document.getElementById("dashboard").classList.add("hidden");
-    document.getElementById("login-container").classList.remove("hidden");
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("error-msg").innerText = "";
-}
